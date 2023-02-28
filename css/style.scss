@@ -1,0 +1,117 @@
+/*---------------------------------------/*
+ # SETTINGS
+/*---------------------------------------*/
+$color-blue: #1abaff;
+$color-blue-hue: hue($color-blue);
+$color-blue-saturation: 90%;
+
+$color-teal: #1affba;
+$color-teal-hue: hue($color-teal);
+$color-teal-saturation: 90%;
+
+$color-gray-hue: hue($color-blue);
+$color-gray-saturation: 10%;
+
+$palettes: (
+  color-gray: (
+    100: hsl($color-gray-hue, $color-gray-saturation, 95%),
+    200: hsl($color-gray-hue, $color-gray-saturation, 90%),
+    300: hsl($color-gray-hue, $color-gray-saturation, 80%),
+    400: hsl($color-gray-hue, $color-gray-saturation, 70%),
+    500: hsl($color-gray-hue, $color-gray-saturation, 50%),
+    600: hsl($color-gray-hue, $color-gray-saturation, 40%),
+    700: hsl($color-gray-hue, $color-gray-saturation, 30%),
+    800: hsl($color-gray-hue, $color-gray-saturation, 20%),
+    900: hsl($color-gray-hue, $color-gray-saturation, 10%),
+  ),
+  color-blue: (
+    100: hsl($color-blue-hue, $color-blue-saturation - 10%, 95%),
+    200: hsl($color-blue-hue, $color-blue-saturation - 10%, 90%),
+    300: hsl($color-blue-hue, $color-blue-saturation - 5%, 80%),
+    400: hsl($color-blue-hue, $color-blue-saturation - 5%, 65%),
+    500: hsl($color-blue-hue, $color-blue-saturation, 50%),
+    600: hsl($color-blue-hue, $color-blue-saturation + 5%, 45%),
+    700: hsl($color-blue-hue, $color-blue-saturation + 5%, 35%),
+    800: hsl($color-blue-hue, $color-blue-saturation + 10%, 25%),
+    900: hsl($color-blue-hue, $color-blue-saturation + 10%, 15%),
+  ),
+  color-teal: (
+    100: hsl($color-teal-hue, $color-teal-saturation - 10%, 95%),
+    200: hsl($color-teal-hue, $color-teal-saturation - 10%, 90%),
+    300: hsl($color-teal-hue, $color-teal-saturation - 5%, 80%),
+    400: hsl($color-teal-hue, $color-teal-saturation - 5%, 70%),
+    500: hsl($color-teal-hue, $color-teal-saturation, 50%),
+    600: hsl($color-teal-hue, $color-teal-saturation + 5%, 45%),
+    700: hsl($color-teal-hue, $color-teal-saturation + 5%, 35%),
+    800: hsl($color-teal-hue, $color-teal-saturation + 10%, 25%),
+    900: hsl($color-teal-hue, $color-teal-saturation + 10%, 15%),
+  ),
+);
+
+/*---------------------------------------/*
+ # TOOLS
+/*---------------------------------------*/
+
+// a function to get the color from the palette
+@function get-color($palette, $color) {
+  @return map-get(map-get($palettes, $palette), $color);
+}
+
+/*---------------------------------------/*
+ # GENERIC
+/*---------------------------------------*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*---------------------------------------/*
+ # ELEMENTS
+/*---------------------------------------*/
+
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+/*---------------------------------------/*
+ # OBJECTS
+/*---------------------------------------*/
+
+/*---------------------------------------/*
+ # COMPONENTS
+/*---------------------------------------*/
+.c-palette {
+  display: flex;
+  &__swatch {
+    flex: 1 1 auto;
+    display: block;
+    aspect-ratio: 6/5;
+  }
+}
+
+.c-palette + .c-palette {
+  margin-top: 2rem;
+}
+
+h1 {
+  background-color: get-color(color-gray, 100);
+  color: get-color(color-gray, 800);
+  padding: 1rem;
+}
+
+/*---------------------------------------/*
+ # UTILITIES
+/*---------------------------------------*/
+
+// generate the palette
+@each $palette, $colors in $palettes {
+  @each $color, $value in $colors {
+    .u-background-#{$palette}-#{$color} {
+      background-color: $value;
+    }
+  }
+}
